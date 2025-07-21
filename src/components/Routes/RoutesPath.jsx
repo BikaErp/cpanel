@@ -1,16 +1,17 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import {BrowserRouter, Route, Routes} from "react-router";
 import Provider from "@components/Routes/Provider.jsx";
+import Authentication from "@components/Authentication/index.jsx";
 
 const RoutesPath = () => {
-    return (
+    return (<>
         <BrowserRouter>
             <Routes>
-                <Route element={<Provider />}>
-                    <Route path="/" element={<>hello</>} />
+                <Route element={<Provider/>}>
+                    <Route path="/" element={<Authentication/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>
-    );
+    </>);
 };
 
 export default RoutesPath;

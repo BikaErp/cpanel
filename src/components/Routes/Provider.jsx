@@ -7,7 +7,9 @@ const Provider = () => {
 
     return (
         <HeroUIProvider navigate={navigate} useHref={useHref}>
-            <Outlet />
+            <div className={"max-w-[1536px] h-full w-full mx-auto"}>
+                <Outlet />
+            </div>
         </HeroUIProvider>
     );
 }
