@@ -49,4 +49,8 @@
         direction: rtl;
         font-family: "iran-yekan", "rokh", sans-serif;
     }
+
+    .gradient-primary {
+        background-image: linear-gradient(to right bottom, #1c3faa, #5382ff);
+    }
 }
