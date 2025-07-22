@@ -33,25 +33,24 @@ const Authentication = () => {
                         <Input
                             label={t("userName")}
                             isRequired
+                            errorMessage="لطفا یک مقدار وارد کنید"
                             labelPlacement="outside"
                             placeholder="نام کاربری را وارد کنید"
                             type="text"
                             size="md"
-                            {...register("username", {required: "نام کاربری الزامی است"})}
-                            errorMessage={errors.username?.message}
                         />
 
                         <Input
                             endContent={<button type="button" onClick={toggleVisibility}>
-                                {isVisible ? <EyeSlash/> : <Eye/>}
+                                {isVisible ? <EyeSlash className={"text-gray-400"}/> :
+                                    <Eye className={"text-gray-400"}/>}
                             </button>}
                             type={isVisible ? "text" : "password"}
                             label={t("Password")}
                             isRequired
+                            errorMessage="لطفا یک مقدار وارد کنید"
                             labelPlacement="outside"
                             placeholder="رمز عبور را وارد کنید"
-                            {...register("password", {required: "رمز عبور الزامی است"})}
-                            errorMessage={errors.password?.message}
                         />
                         <Button
                             color="primary"
