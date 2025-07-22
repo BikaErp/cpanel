@@ -1,9 +1,10 @@
-import {Button, Form, Input} from "@heroui/react";
+import {addToast, Button, Form, Input} from "@heroui/react";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Eye, EyeSlash} from "iconsax-reactjs";
 import {useForm} from "react-hook-form";
 import {useLogin} from "./Components/Hooks/useLogin.js";
+import {Alert} from "@components/Globals/Functions/Alert.js";
 
 const Authentication = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -16,9 +17,17 @@ const Authentication = () => {
     const onSubmit = (data) => {
         loginMutation.mutate(data, {
             onSuccess: (res) => {
-                console.log("ورود موفق", res);
+                Alert(
+                    "ورود با موفقیت انجام",
+                    "",
+                    "success",
+                )
             }, onError: (error) => {
-                console.error("خطای ورود", error);
+                Alert(
+                    "خطا در ورود",
+                    "اطلاعات خود را بررسی کنید",
+                    "danger"
+                )
             }
         });
     }
@@ -38,6 +47,7 @@ const Authentication = () => {
                             placeholder="نام کاربری را وارد کنید"
                             type="text"
                             size="md"
+                            {...register("username")}
                         />
 
                         <Input
@@ -51,6 +61,7 @@ const Authentication = () => {
                             errorMessage="لطفا یک مقدار وارد کنید"
                             labelPlacement="outside"
                             placeholder="رمز عبور را وارد کنید"
+                            {...register("password")}
                         />
                         <Button
                             color="primary"
