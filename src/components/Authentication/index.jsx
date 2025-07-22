@@ -2,63 +2,77 @@ import {Button, Form, Input} from "@heroui/react";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Eye, EyeSlash} from "iconsax-reactjs";
+import {useForm} from "react-hook-form";
+import {useLogin} from "./Components/Hooks/useLogin.js";
 
 const Authentication = () => {
     const [isVisible, setIsVisible] = useState(false);
-
     const toggleVisibility = () => setIsVisible(!isVisible);
-    const {t} = useTranslation()
+    const {t} = useTranslation();
 
-    return (<>
-        <main className={"h-screen flex justify-center items-center"}>
-            <div
-                className={"max-w-[1100px] gap-[50px] w-full rounded-[30px] p-4 bg-white border border-gray-300 h-screen max-h-[550px] flex justify-center"}>
-                <divc class={"basis-5/12 flex justify-center"}>
-                    <div className="w-[350px] flex flex-col justify-center h-full">
-                        <img src="/images/ArmDark.svg" alt="Harmony" className={"w-[220px] mx-auto mb-10"}/>
-                        <Form className="space-y-6">
-                            <Input
-                                label={t("userName")}
-                                isRequired
-                                errorMessage="لطفا یک مقدار وارد کنید"
-                                labelPlacement="outside"
-                                name="username"
-                                placeholder="نام کاربری را وارد کنید"
-                                type="text"
-                                size={"md"}
-                            />
+    const {register, handleSubmit, formState: {errors}} = useForm();
+    const loginMutation = useLogin();
 
-                            <Input
-                                endContent={<>
-                                    <button
-                                        type="button"
-                                        className={"cursor-pointer"}
-                                        onClick={toggleVisibility}
-                                    >
-                                        {isVisible ? <EyeSlash/> : <Eye/>}
-                                    </button>
-                                </>}
-                                type={isVisible ? "text" : "password"}
-                                label={t("Password")}
-                                isRequired
-                                errorMessage="لطفا یک مقدار وارد کنید"
-                                labelPlacement="outside"
-                                name="username"
-                                placeholder="رمز عبور را وارد کنید"
-                            />
-                            <Button color="primary" type="submit" className={"w-full text-medium"}>{t("LogIn")}</Button>
-                        </Form>
-                    </div>
-                </divc>
-                <div
-                    className={"basis-7/12 rounded-[20px] gradient-primary flex flex-col justify-center items-center gap-[10px]"}>
-                    <img src="https://cpanel.harmonysystem.ir/Assets/Image/Login/illustration.svg" alt=""/>
-                    <h1 className={"font-[rokh] font-bold text-white text-[30px]"}>Harmony</h1>
-                    <h1 className={"font-[rokh] font-bold text-white text-[32px]"}>بهتر از انچه فکر میکنید!</h1>
+    const onSubmit = (data) => {
+        loginMutation.mutate(data, {
+            onSuccess: (res) => {
+                console.log("ورود موفق", res);
+            }, onError: (error) => {
+                console.error("خطای ورود", error);
+            }
+        });
+    }
+
+    return (<main className="h-screen flex justify-center items-center">
+        <div
+            className="max-w-[1100px] gap-[50px] w-full rounded-[30px] p-4 bg-white border border-gray-300 h-screen max-h-[550px] flex justify-center">
+            <div className="basis-5/12 flex justify-center">
+                <div className="w-[350px] flex flex-col justify-center h-full">
+                    <img src="/images/ArmDark.svg" alt="Harmony" className="w-[220px] mx-auto mb-10"/>
+                    <Form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                        <Input
+                            label={t("userName")}
+                            isRequired
+                            labelPlacement="outside"
+                            placeholder="نام کاربری را وارد کنید"
+                            type="text"
+                            size="md"
+                            {...register("username", {required: "نام کاربری الزامی است"})}
+                            errorMessage={errors.username?.message}
+                        />
+
+                        <Input
+                            endContent={<button type="button" onClick={toggleVisibility}>
+                                {isVisible ? <EyeSlash/> : <Eye/>}
+                            </button>}
+                            type={isVisible ? "text" : "password"}
+                            label={t("Password")}
+                            isRequired
+                            labelPlacement="outside"
+                            placeholder="رمز عبور را وارد کنید"
+                            {...register("password", {required: "رمز عبور الزامی است"})}
+                            errorMessage={errors.password?.message}
+                        />
+                        <Button
+                            color="primary"
+                            type="submit"
+                            className="w-full text-medium"
+                            isLoading={loginMutation.isPending}
+                        >
+                            {t("LogIn")}
+                        </Button>
+                    </Form>
                 </div>
             </div>
-        </main>
-    </>)
-}
+
+            <div
+                className="basis-7/12 rounded-[20px] gradient-primary flex flex-col justify-center items-center gap-[10px]">
+                <img src="https://cpanel.harmonysystem.ir/Assets/Image/Login/illustration.svg" alt=""/>
+                <h1 className="font-[rokh] font-bold text-white text-[30px]">Harmony</h1>
+                <h1 className="font-[rokh] font-bold text-white text-[32px]">بهتر از انچه فکر میکنید!</h1>
+            </div>
+        </div>
+    </main>);
+};
 
 export default Authentication;
