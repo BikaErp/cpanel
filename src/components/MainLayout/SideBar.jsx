@@ -8,7 +8,7 @@ const SideBar = ({width}) => {
     const sideBarItems = useSideBar()
 
     return (<>
-        <aside style={{width: width + "px"}} className={"h-screen p-4 fixed right-0 top-0 border-l-1 border-gray-200"}>
+        <aside style={{width: width + "px"}} className={`h-screen fixed right-0 top-0 border-l-1 border-gray-200 ${InRoute("/") ? "p-4" : "py-4 px-2"}`}>
             <Link to={"/"} className={`flex items-center gap-2 group cursor-pointer ${!InRoute("/") ? "justify-center" : "justify-start"}`}>
                 <div
                     className={`size-11 flex justify-center items-center rounded-xl transition-all duration-200 group-hover:bg-primary/10 ${InRoute("/") && "bg-primary/10"}`}>
