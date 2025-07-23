@@ -53,4 +53,17 @@
     .gradient-primary {
         background-image: linear-gradient(to right bottom, #1c3faa, #5382ff);
     }
+
+    #nprogress .bar {
+        background: var(--color-primary) !important;
+    }
+
+    #nprogress .peg {
+        box-shadow: 0 0 10px var(--color-primary), 0 0 5px var(--color-primary) !important;
+    }
+
+    #nprogress .spinner-icon {
+        border-top-color: var(--color-primary) !important;
+        border-left-color: var(--color-primary) !important;
+    }
 }
