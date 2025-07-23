@@ -1,14 +1,21 @@
 import {BrowserRouter, Route, Routes} from "react-router";
-import Provider from "@components/Routes/Provider.jsx";
+import InitialProvider from "@components/Routes/InitialProvider.jsx";
 import Authentication from "@components/Authentication/index.jsx";
-import RouteChangeHandler from "@components/Globals/Components/RouteChnageHandler.jsx";
+import ApplicationProvider from "@components/Routes/ApplicationProvider.jsx";
+import Languages from "@components/Modules/Languages/index.jsx";
 
 const RoutesPath = () => {
     return (<>
         <BrowserRouter>
             <Routes>
-                <Route element={<Provider/>}>
+                <Route element={<InitialProvider/>}>
                     <Route path="/" element={<Authentication/>}/>
+
+                    <Route element={<ApplicationProvider />}>
+                        <Route path="/Languages" element={<Languages />}>
+
+                        </Route>
+                    </Route>
                 </Route>
             </Routes>
         </BrowserRouter>

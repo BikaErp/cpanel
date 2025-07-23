@@ -5,11 +5,13 @@ import {Eye, EyeSlash} from "iconsax-reactjs";
 import {useForm} from "react-hook-form";
 import {useLogin} from "./Components/Hooks/useLogin.js";
 import {Alert} from "@components/Globals/Functions/Alert.js";
+import {useNavigate} from "react-router";
 
 const Authentication = () => {
     const [isVisible, setIsVisible] = useState(false);
     const toggleVisibility = () => setIsVisible(!isVisible);
     const {t} = useTranslation();
+    const naviage = useNavigate();
 
     const {register, handleSubmit, formState: {errors}} = useForm();
     const loginMutation = useLogin();
@@ -22,6 +24,8 @@ const Authentication = () => {
                     "",
                     "success",
                 )
+
+                naviage("/languages")
             }, onError: (error) => {
                 Alert(
                     "خطا در ورود",

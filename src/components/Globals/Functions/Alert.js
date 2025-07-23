@@ -10,7 +10,7 @@ const Alert = (title, description, variant = "default") => {
     console.log(variants, variant);
 
     addToast({
-        title: title, description: description, color: variant,
+        title: title, description: description, color: variant
     })
 }
 
