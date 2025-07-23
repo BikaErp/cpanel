@@ -7,7 +7,7 @@ const useSideBar = () => {
             title: "زبان ها",
             description: "کنترل زبان ها",
             url: "/languages",
-            icon: <LanguageSquare className={InRoute("/languages") && "text-primary"} />
+            icon: <LanguageSquare className={InRoute("/languages") ? "text-primary" : ""} />
         }
     ]
 
