@@ -25,7 +25,7 @@ const Authentication = () => {
                     "success",
                 )
 
-                naviage("/languages")
+                naviage("/")
             }, onError: (error) => {
                 Alert(
                     "خطا در ورود",

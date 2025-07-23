@@ -10,15 +10,17 @@ const RoutesPath = () => {
         <BrowserRouter>
             <Routes>
                 <Route element={<InitialProvider/>}>
-                    <Route path="/" element={<Authentication/>}/>
+                    <Route path="/login" element={<Authentication/>}/>
 
-                    <Route element={<ApplicationProvider />}>
-                        <Route path="/Languages" element={<Languages />}>
+                    <Route element={<ApplicationProvider/>}>
+                        <Route path="/" element={<>heellloo</>}/>
+
+                        <Route path="/Languages" element={<Languages/>}>
 
                         </Route>
                     </Route>
 
-                    <Route path={"*"} element={<NotFound />} />
+                    <Route path={"*"} element={<NotFound/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>
