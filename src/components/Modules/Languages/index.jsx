@@ -15,8 +15,22 @@ export default function LanguagesModule() {
             field: "title"
         },
         {
-            title: t("Title"),
-            field: "title"
+            title: t("Language"),
+            field: "languageCulture"
+        },
+        {
+            title: t("Orientation"),
+            render: (props) => props.direction.value
+        },
+        {
+            title: t("FlagImage"),
+            render: (props) => (
+                <img src={props.flagImageFileName} alt={""} className={"size-[38px] border border-gray-300 object-cover overflow-hidden rounded-full"} />
+            )
+        },
+        {
+            title: t("StateShow"),
+            render: (props) => "stateShow"
         }
     ]
 

@@ -22,7 +22,7 @@ const MainLayout = ({children, data}) => {
             <div className={"size-full"} style={{paddingRight: sideBarWidth + "px"}}>
                 <Header/>
                 <div className={"w-full min-h-[calc(100svh-(56px+64px))] bg-[#F5F5F5] py-5"}>
-                    <div className="xl:max-w-[1320px] size-full mx-auto">
+                    <div className="xl:max-w-[1500px] size-full mx-auto">
                         {children}
                     </div>
                 </div>
