@@ -39,10 +39,10 @@ const DataTable = ({name, module, rowData, columnsDef}) => {
                     className="min-w-full table-fixed border border-gray-300 border-separate border-spacing-0 rounded-xl overflow-hidden">
                     <thead className="h-[36px] bg-[#f0f0f0] text-[#7f7f7f]">
                     <tr>
-                        <th className="text-right px-3 text-[15px] font-bold" style={{width: "60px"}}>ردیف</th>
+                        <th className="px-3 text-[15px] font-bold" style={{width: "60px"}}>ردیف</th>
                         {columns.map(column => (<th
                             key={column.field}
-                            className="text-right px-3 text-[15px] font-bold text-nowrap"
+                            className="px-3 text-[15px] font-bold text-nowrap"
                             style={{width: column.width ? `${column.width}px` : "auto"}}
                         >
                             {column.title}
@@ -59,10 +59,12 @@ const DataTable = ({name, module, rowData, columnsDef}) => {
                             </td>
                             {columns.map(column => (<td
                                 key={column.field}
-                                className="text-right px-3 text-[15px] text-nowrap text-gray-600"
+                                className="px-3 text-[15px] text-nowrap text-gray-600"
                                 style={{width: column.width ? `${column.width}px` : "auto"}}
                             >
-                                {column.render ? column.render(item) : item[column.field]}
+                                <div className={"size-full h-[48px] flex justify-center items-center"}>
+                                    {column.render ? column.render(item) : item[column.field]}
+                                </div>
                             </td>))}
                         </tr>))}
                         </tbody>

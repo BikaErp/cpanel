@@ -1,9 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {User, Chip, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@heroui/react";
+import {User, Chip, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Switch} from "@heroui/react";
 import {DataTable} from "@components/Globals/Components/DataTable/index.jsx";
 import TableHeader from "@components/Globals/Components/DataTable/TableHeader.jsx";
 import {GET} from "@components/Services/Axios/Methods.js";
 import {useTranslation} from "react-i18next";
+import StateChange from "@components/Globals/Components/DataTable/StateChange.jsx";
+import {ToggleApi} from "@components/Globals/Functions/ToggleApi.js";
+
+const Module = "languages";
 
 export default function LanguagesModule() {
     const [rowData, setRowData] = useState([])
@@ -30,7 +34,13 @@ export default function LanguagesModule() {
         },
         {
             title: t("StateShow"),
-            render: (props) => "stateShow"
+            render: (props) => (
+                <StateChange selected={props.stateShow} fetch={{
+                    url: `/${Module}/StateShow`,
+                    id: props.languageId,
+                    field: "languageId"
+                }}/>
+            )
         }
     ]
 
@@ -38,7 +48,7 @@ export default function LanguagesModule() {
         <>
             <DataTable
                 name={"زبان"}
-                module={"languages"}
+                module={Module}
                 columnsDef={columnsDef}
             />
         </>
