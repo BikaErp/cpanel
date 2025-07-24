@@ -1,6 +1,17 @@
+const locations = {
+  en: {
+    LANGUAGES: "Languages"
+  },
+  fa: {
+    LANGUAGES: "زبان ها"
+  }
+}
+
 export const resources = {
   en: {
     translation: {
+      ActionFilter: "Filters",
+      ...locations.en,
       expirationFrom: "Expiration from",
       expirationTo: "Expiration to",
       addDashboard: "Add Dashboard",
@@ -2960,6 +2971,8 @@ export const resources = {
   },
   fa: {
     translation: {
+      ActionFilter: "فیلتر ها",
+      ...locations.fa,
       expirationFrom: "انقضا از",
       expirationTo: "انقضا تا",
       addDashboard: "افزودن داشبورد",

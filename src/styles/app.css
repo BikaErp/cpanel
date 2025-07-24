@@ -66,4 +66,12 @@
         border-top-color: var(--color-primary) !important;
         border-left-color: var(--color-primary) !important;
     }
+
+    .track-2 path {
+        stroke-width: 2px;
+    }
+
+    .track-3 path {
+        stroke-width: 3px;
+    }
 }
