@@ -4,7 +4,7 @@ import {GET} from "@components/Services/Axios/Methods.js";
 import TableHeader from "@components/Globals/Components/DataTable/TableHeader.jsx";
 import TableLoading from "@components/Globals/Components/DataTable/TableLoading.jsx";
 
-const DataTable = ({name, module, rowData, columnsDef}) => {
+const DataTable = ({name, module, rowData, columnsDef, refresh}) => {
     const {t} = useTranslation();
     const [columns, setColumns] = useState([]);
     const [data, setData] = useState(null)
@@ -24,7 +24,7 @@ const DataTable = ({name, module, rowData, columnsDef}) => {
 
     useEffect(() => {
         fetchData()
-    }, []);
+    }, [refresh]);
 
     useEffect(() => {
         setColumns(columnsDef)

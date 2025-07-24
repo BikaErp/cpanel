@@ -14,18 +14,25 @@ const StateChange = ({selected, fetch, isChangeable = true}) => {
         if (!isChangeable) return
 
         setLoading(true);
-        const res = await PUT(fetch?.url, {[fetch.field]: fetch.id})
 
-        if (res.status === 200) {
-            console.log("ok")
-            setIsSelected(prev => !prev);
+        try {
+            const res = await PUT(fetch?.url, {[fetch.field]: fetch.id})
+
+            if (res.status === 200) {
+                console.log("ok")
+                setIsSelected(prev => !prev);
+                fetch?.refresh?.()
+            }
+        } catch (error) {
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     }
 
     return (<>
         <div className={"w-14 flex justify-center items-center"}>
-            {!loading && (<Switch isSelected={isSelected} size={"sm"} isReadOnly={!isChangeable} onChange={handleChange}/>)}
+            {!loading && (
+                <Switch isSelected={isSelected} size={"sm"} isReadOnly={!isChangeable} onChange={handleChange}/>)}
 
             {loading && (<>
                 <Spinner size={"sm"}/>

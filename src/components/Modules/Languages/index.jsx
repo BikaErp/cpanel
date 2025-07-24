@@ -12,6 +12,11 @@ const Module = "languages";
 export default function LanguagesModule() {
     const [rowData, setRowData] = useState([])
     const {t} = useTranslation()
+    const [refresh, setRefresh] = useState(true)
+
+    const update = () => {
+        setRefresh(prev => !prev)
+    }
 
     const columnsDef = [
         {
@@ -41,6 +46,17 @@ export default function LanguagesModule() {
                     field: "languageId"
                 }}/>
             )
+        },
+        {
+            title: t("default"),
+            render: (props) => (
+                <StateChange selected={props.isDefault} fetch={{
+                    url: `/${Module}/Default`,
+                    id: props.languageId,
+                    field: "languageId",
+                    refresh: update
+                }}/>
+            )
         }
     ]
 
@@ -50,6 +66,7 @@ export default function LanguagesModule() {
                 name={"زبان"}
                 module={Module}
                 columnsDef={columnsDef}
+                refresh={refresh}
             />
         </>
     );
