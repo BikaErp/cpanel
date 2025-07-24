@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Button,
     Drawer,
@@ -9,80 +9,42 @@ import {
     Input,
     useDisclosure
 } from "@heroui/react";
-import {Add, Filter, SearchNormal1, More} from "iconsax-reactjs";
-import {AgGridReact} from "ag-grid-react";
-import {GET} from "@components/Services/Axios/Methods.js";
+import {Add, Filter, More, SearchNormal1} from "iconsax-reactjs";
 import {useTranslation} from "react-i18next";
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
-import {AgGridPersion} from "@components/Services/Translations/Resources.js";
+import {GET} from "@components/Services/Axios/Methods.js";
 
 const ActionCellRenderer = (props) => {
-    return (
-        <div className="relative inline-block">
-            <Button isIconOnly variant="light" size="sm">
-                <More size={20} />
-            </Button>
-            {/* TODO: Dropdown actions implementation */}
-        </div>
-    );
+    return (<div className="relative inline-block">
+        <Button isIconOnly variant="light" size="sm">
+            <More size={20}/>
+        </Button>
+        {/* TODO: Dropdown actions implementation */}
+    </div>);
 };
 
-ModuleRegistry.registerModules([AllCommunityModule]);
-
-const DataTable = ({name}) => {
+const DataTable = ({name, module, rowData, columnsDef}) => {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const {t} = useTranslation();
-    const gridRef = useRef();
-    const [rowData, setRowData] = useState([]);
-    const [totalCount, setTotalCount] = useState(0);
-    const [filters, setFilters] = useState({
-        Search: "",
-        CountryId: "",
-        IsActive: null,
-        IsDeActive: null,
-        PageNumber: 1,
-        PageSize: 10,
-    });
+    const [columns, setColumns] = useState([]);
+    const [data, setData] = useState(null)
 
-    const columnDefs = useMemo(() => [
-        {headerName: "عنوان", field: "title", flex: 1, sortable: true, filter: true},
-        {headerName: "کد فرهنگ", field: "languageCulture", flex: 1, sortable: true},
-        {
-            headerName: "فلگ",
-            field: "flagImageFileName",
-            cellRenderer: (params) => <img src={params.value} alt="flag" className="w-6 h-4" />,
-        },
-        {headerName: "جهت نوشتار", field: "direction.value"},
-        {headerName: "پیش‌فرض", field: "isDefault", cellRenderer: ({value}) => value ? "✅" : "❌"},
-        {headerName: "فعال", field: "stateShow", cellRenderer: ({value}) => value ? "✅" : "❌"},
-        {headerName: "ترتیب", field: "order"},
-        {
-            headerName: "",
-            field: "actions",
-            cellRenderer: ActionCellRenderer,
-            pinned: "left",
-        },
-    ], []);
 
-    const fetchData = useCallback(async () => {
-        const res = await GET("/Languages", filters, "PagedList");
-        setRowData(res.items);
-        setTotalCount(res.totalCount);
-    }, [filters]);
+    const fetchData = async () => {
+        const res = await GET(`/${module}`, {
+            pageNumber: 1, pageSize: 10,
+        }, "PagedList")
+
+        if (res) setData(res)
+    }
 
     useEffect(() => {
-        fetchData();
+        fetchData()
     }, []);
 
-    const onPaginationChanged = useCallback((params) => {
-        const current = params.api.paginationGetCurrentPage();
-        const size = params.api.paginationGetPageSize();
-        setFilters((prev) => ({...prev, PageNumber: current + 1, PageSize: size}));
-    }, []);
+    useEffect(() => {
+        setColumns(columnsDef)
+    }, [columnsDef]);
 
-    const handleSearchChange = (e) => {
-        setFilters((prev) => ({...prev, Search: e.target.value, PageNumber: 1}));
-    };
 
     return (<>
         <div className="bg-white rounded-[14px] w-full p-4 mb-4">
@@ -94,10 +56,11 @@ const DataTable = ({name}) => {
                         name="username"
                         placeholder={`جستجوی ${name}`}
                         type="text"
-                        classNames={{ base: "w-[330px]", inputWrapper: "border-1" }}
+                        classNames={{base: "w-[330px]", inputWrapper: "border-1"}}
                         variant="bordered"
-                        startContent={<SearchNormal1 className="track-2 text-gray-500" size={25} />}
-                        onChange={handleSearchChange}
+                        startContent={<SearchNormal1 className="track-2 text-gray-500" size={25}/>}
+                        onChange={() => {
+                        }}
                     />
                     <Button variant="bordered" onPress={onOpen} className="gap-2 font-bold text-gray-800">
                         <Filter size={22}/>
@@ -109,43 +72,60 @@ const DataTable = ({name}) => {
                     {!name ? <span>افزودن</span> : <span>{name} جدید</span>}
                 </Button>
             </div>
-            <div className="w-full mt-4">
-                <div className="ag-theme-alpine w-full h-[500px]">
-                    <AgGridReact
-                        ref={gridRef}
-                        rowData={rowData}
-                        enableRtl={true}
-                        columnDefs={columnDefs}
-                        pagination={true}
-                        paginationPageSize={filters.PageSize}
-                        onPaginationChanged={onPaginationChanged}
-                        rowHeight={45}
-                        suppressRowClickSelection
-                        rowSelection="single"
-                        localeText={AgGridPersion}
-                    />
-                </div>
+            <div className="w-full mt-4 overflow-x-auto">
+                <table className="min-w-full table-fixed border border-gray-300 border-separate border-spacing-0 rounded-xl overflow-hidden">
+                    <thead className="h-[36px] bg-[#f0f0f0] text-[#7f7f7f]">
+                    <tr>
+                        <th className="text-right px-3 text-[15px] font-bold" style={{ width: "60px" }}>ردیف</th>
+                        {columns.map(column => (
+                            <th
+                                key={column.field}
+                                className="text-right px-3 text-[15px] font-bold text-nowrap"
+                                style={{ width: column.width ? `${column.width}px` : "auto" }}
+                            >
+                                {column.title}
+                            </th>
+                        ))}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {data?.items.map((item, index) => (
+                        <tr key={item.id} className="h-[48px] hover:bg-gray-50">
+                            <td className="px-3">
+                                <span className="bg-[#F0F0F0] p-1 px-2 rounded-lg text-gray-500 text-[12px]">{index + 1}</span>
+                            </td>
+                            {columns.map(column => (
+                                <td
+                                    key={column.field}
+                                    className="text-right px-3 text-[15px] text-nowrap"
+                                    style={{ width: column.width ? `${column.width}px` : "auto" }}
+                                >
+                                    {column.render ? column.render(item) : item[column.field]}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
             </div>
         </div>
 
         <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
             <DrawerContent>
-                {(onClose) => (
-                    <>
-                        <DrawerHeader className="flex flex-col gap-1">{t("ActionFilter")}</DrawerHeader>
-                        <DrawerBody>
-                            {/* TODO: افزودن فیلترهای بیشتر */}
-                        </DrawerBody>
-                        <DrawerFooter className="flex justify-center items-center">
-                            <Button color="danger" className="font-bold basis-1/2" variant="light" onPress={onClose}>
-                                {t("Close")}
-                            </Button>
-                            <Button color="primary" className="font-bold basis-1/2" onPress={onClose}>
-                                {t("Actions")}
-                            </Button>
-                        </DrawerFooter>
-                    </>
-                )}
+                {(onClose) => (<>
+                    <DrawerHeader className="flex flex-col gap-1">{t("ActionFilter")}</DrawerHeader>
+                    <DrawerBody>
+                        {/* TODO: افزودن فیلترهای بیشتر */}
+                    </DrawerBody>
+                    <DrawerFooter className="flex justify-center items-center">
+                        <Button color="danger" className="font-bold basis-1/2" variant="light" onPress={onClose}>
+                            {t("Close")}
+                        </Button>
+                        <Button color="primary" className="font-bold basis-1/2" onPress={onClose}>
+                            {t("Actions")}
+                        </Button>
+                    </DrawerFooter>
+                </>)}
             </DrawerContent>
         </Drawer>
     </>);
