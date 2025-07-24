@@ -3,18 +3,22 @@ import {useTranslation} from "react-i18next";
 import {GET} from "@components/Services/Axios/Methods.js";
 import TableHeader from "@components/Globals/Components/DataTable/TableHeader.jsx";
 import TableLoading from "@components/Globals/Components/DataTable/TableLoading.jsx";
+import Pagination from "@components/Globals/Components/DataTable/Pagination.jsx";
 
 const DataTable = ({name, module, rowData, columnsDef, refresh}) => {
     const {t} = useTranslation();
     const [columns, setColumns] = useState([]);
     const [data, setData] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+    const [filter, setFilter] = useState({
+        pageNumber: 1, pageSize: 10
+    });
 
     const fetchData = async () => {
         setIsLoading(true)
 
         const res = await GET(`/${module}`, {
-            pageNumber: 1, pageSize: 10,
+            ...filter,
         }, "PagedList")
 
         if (res) setData(res)
@@ -24,12 +28,23 @@ const DataTable = ({name, module, rowData, columnsDef, refresh}) => {
 
     useEffect(() => {
         fetchData()
-    }, [refresh]);
+    }, [refresh, filter]);
 
     useEffect(() => {
         setColumns(columnsDef)
     }, [columnsDef]);
 
+    const setPage = (page) => {
+        setFilter(prev => ({
+            ...prev, pageNumber: page,
+        }))
+    }
+
+    const setPageSize = (size) => {
+        setFilter(prev => ({
+            ...prev, pageSize: size,
+        }))
+    }
 
     return (<>
         <div className="bg-white rounded-[14px] w-full p-4 mb-4">
@@ -52,7 +67,8 @@ const DataTable = ({name, module, rowData, columnsDef, refresh}) => {
                     {/*ShowData*/}
                     {!isLoading && data !== null && (<>
                         <tbody>
-                        {data?.items.map((item, index) => (<tr key={item.id} className="h-[48px] hover:bg-gray-50 shadow-[0px_-1px_0px_0px] first:shadow-[#cccccc] not-first:shadow-[#e6e6e6]">
+                        {data?.items.map((item, index) => (<tr key={item.id}
+                                                               className="h-[48px] hover:bg-gray-50 shadow-[0px_-1px_0px_0px] first:shadow-[#cccccc] not-first:shadow-[#e6e6e6]">
                             <td className="px-3">
                                 <span
                                     className="bg-[#F0F0F0] p-1 px-2 rounded-lg text-gray-500 text-[12px]">{index + 1}</span>
@@ -73,8 +89,14 @@ const DataTable = ({name, module, rowData, columnsDef, refresh}) => {
                     {isLoading && (<>
                         <TableLoading length={columns.length + 1}/>
                     </>)}
-                    {/*NoData*/}
                 </table>
+
+                <Pagination
+                    data={data}
+                    setPage={setPage}
+                    setPageSize={setPageSize}
+                    isLoading={isLoading}
+                />
             </div>
         </div>
 
