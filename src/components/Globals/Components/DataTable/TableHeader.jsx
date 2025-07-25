@@ -1,20 +1,70 @@
 import {
     Button,
+    Divider,
     Drawer,
     DrawerBody,
     DrawerContent,
     DrawerFooter,
     DrawerHeader,
     Input,
+    Select,
+    SelectItem,
+    Switch,
     useDisclosure
 } from "@heroui/react";
 import {Add, Filter, SearchNormal1} from "iconsax-reactjs";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
+import {GET} from "@components/Services/Axios/Methods.js";
+import {Alert} from "@components/Globals/Functions/Alert.js";
 
-const TableHeader = ({name}) => {
+const TableHeader = ({name, setFilters, filters}) => {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const {t} = useTranslation();
+    const [selectionData, setSelectionData] = useState({});
+
+    const fetchSelectionOptions = async () => {
+        const selectionFilters = filters.filter(f => f.type === "selection");
+        const results = {};
+
+        await Promise.all(selectionFilters.map(async filter => {
+            try {
+                results[filter.name] = await GET(filter.api);
+            } catch (error) {
+                console.error(`خطا در واکشی ${filter.name}:`, error);
+                Alert("خطا در بارگزاری اطلاعات", error, "danger")
+                results[filter.name] = [];
+            }
+        }));
+
+        setSelectionData(results);
+    };
+
+    useEffect(() => {
+        fetchSelectionOptions();
+    }, []);
+
+    const convertToSelection = (data) => {
+        return data.map(item => ({
+            key: item.key, label: item.value,
+        }))
+    }
+
+    const filterToggleChange = (e) => {
+        const {name, checked} = e.target;
+
+        setFilters(prev => Array.isArray(prev) ? prev.map(item => item.name === name ? {
+            ...item, value: checked
+        } : item) : []);
+    }
+
+    const filterSelectChange = (e, name) => {
+        const uniqueArray = [...new Set(e)];
+
+        setFilters(prev => Array.isArray(prev) ? prev.map(item => item.name === name ? {
+            ...item, value: uniqueArray[0] ?? null
+        } : item) : []);
+    }
 
     return (<>
         <div className="flex justify-between items-center w-full">
@@ -46,8 +96,24 @@ const TableHeader = ({name}) => {
             <DrawerContent>
                 {(onClose) => (<>
                     <DrawerHeader className="flex flex-col gap-1">{t("ActionFilter")}</DrawerHeader>
-                    <DrawerBody>
-                        {/* TODO: افزودن فیلترهای بیشتر */}
+                    <DrawerBody className={"flex flex-col gap-5"}>
+                        <Divider className={"mb-2"}/>
+                        {filters.map((filter) => {
+                            return filter.type === "toggle" && (<div className={"flex flex-col gap-2"}>
+                                <h3>{filter.title}</h3>
+                                <Switch name={filter.name} isSelected={filter.value} onChange={filterToggleChange}/>
+                            </div>)
+                        })}
+                        {filters.map((filter) => {
+                            return filter.type === "selection" && (<div className={"flex flex-col gap-2"}>
+                                <h3>{filter.title}</h3>
+                                <Select className="max-w-xs" variant={"bordered"}
+                                        onSelectionChange={(e) => filterSelectChange(e, filter.name)}>
+                                    {selectionData?.[filter?.name]?.map((item) => (
+                                        <SelectItem key={item?.key}>{item?.value}</SelectItem>))}
+                                </Select>
+                            </div>)
+                        })}
                     </DrawerBody>
                     <DrawerFooter className="flex justify-center items-center">
                         <Button color="danger" className="font-bold basis-1/2" variant="light" onPress={onClose}>
