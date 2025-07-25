@@ -13,17 +13,20 @@ const DataTable = ({name, module, rowData, columnsDef, refresh}) => {
     const [filter, setFilter] = useState({
         pageNumber: 1, pageSize: 10
     });
+    const [selectedRow, setSelectedRow] = useState(null);
 
     const fetchData = async () => {
         setIsLoading(true)
 
-        const res = await GET(`/${module}`, {
-            ...filter,
-        }, "PagedList")
+        try {
+            const res = await GET(`/${module}`, {
+                ...filter,
+            }, "PagedList")
 
-        if (res) setData(res)
-
-        setIsLoading(false)
+            if (res) setData(res)
+        }catch (error) {} finally {
+            setIsLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -41,8 +44,10 @@ const DataTable = ({name, module, rowData, columnsDef, refresh}) => {
     }
 
     const setPageSize = (size) => {
+        if (parseInt(size) === filter.pageSize) return;
+
         setFilter(prev => ({
-            ...prev, pageSize: size,
+            ...prev, pageSize: parseInt(size),
         }))
     }
 
@@ -67,22 +72,29 @@ const DataTable = ({name, module, rowData, columnsDef, refresh}) => {
                     {/*ShowData*/}
                     {!isLoading && data !== null && (<>
                         <tbody>
-                        {data?.items.map((item, index) => (<tr key={item.id}
-                                                               className="h-[48px] hover:bg-gray-50 shadow-[0px_-1px_0px_0px] first:shadow-[#cccccc] not-first:shadow-[#e6e6e6]">
-                            <td className="px-3">
+                        {data?.items.map((item, index) => (<>
+                                <tr key={item.id}
+                                    className="h-[48px] hover:bg-gray-50 shadow-[0px_-1px_0px_0px] first:shadow-[#cccccc] not-first:shadow-[#e6e6e6]"
+                                    onContextMenu={(e) => {
+                                        e.preventDefault();
+                                        setSelectedRow(item);
+                                    }}
+                                >
+                                    <td className="px-3">
                                 <span
                                     className="bg-[#F0F0F0] p-1 px-2 rounded-lg text-gray-500 text-[12px]">{index + 1}</span>
-                            </td>
-                            {columns.map(column => (<td
-                                key={column.field}
-                                className="px-3 text-[15px] text-nowrap text-gray-600"
-                                style={{width: column.width ? `${column.width}px` : "auto"}}
-                            >
-                                <div className={"size-full h-[48px] flex justify-center items-center"}>
-                                    {column.render ? column.render(item) : item[column.field]}
-                                </div>
-                            </td>))}
-                        </tr>))}
+                                    </td>
+                                    {columns.map(column => (<td
+                                        key={column.field}
+                                        className="px-3 text-[15px] text-nowrap text-gray-600"
+                                        style={{width: column.width ? `${column.width}px` : "auto"}}
+                                    >
+                                        <div className={"size-full h-[48px] flex justify-center items-center"}>
+                                            {column.render ? column.render({...item, selectedRow}) : item[column.field]}
+                                        </div>
+                                    </td>))}
+                                </tr>
+                            </>))}
                         </tbody>
                     </>)}
                     {/*Loading*/}

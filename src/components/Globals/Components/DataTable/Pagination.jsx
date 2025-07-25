@@ -4,6 +4,7 @@ import {Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner} 
 
 const Pagination = ({data, setPage, isLoading, setPageSize}) => {
     if (!data) return null;
+
     const [selectedKeys, setSelectedKeys] = React.useState(new Set(["10"]))
     const {page, totalPages, hasNextPage, hasPreviousPage, pageSize} = data;
 
