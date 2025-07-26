@@ -19,7 +19,7 @@ const useQuery = ({url}) => {
         switch (method) {
             case "GET":
                 GET(address)
-                    .then(r => setData(r.data))
+                    .then(r => setData(r))
                     .catch(err => setError(err.message));
                 break;
             case "POST":

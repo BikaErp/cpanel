@@ -21,7 +21,8 @@ import {Alert} from "@components/Globals/Functions/Alert.js";
 const TableHeader = ({name, setFilters, filters}) => {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const {t} = useTranslation();
-    const [selectionData, setSelectionData] = useState({});
+    const [selectionData, setSelectionData] = useState();
+    const [values, setValues] = useState({});
 
     const fetchSelectionOptions = async () => {
         const selectionFilters = filters.filter(f => f.type === "selection");
@@ -60,6 +61,7 @@ const TableHeader = ({name, setFilters, filters}) => {
 
     const filterSelectChange = (e, name) => {
         const uniqueArray = [...new Set(e)];
+        setValues(prev => ({...prev, [name]: new Set([uniqueArray[0]])}));
 
         setFilters(prev => Array.isArray(prev) ? prev.map(item => item.name === name ? {
             ...item, value: uniqueArray[0] ?? null
@@ -107,9 +109,13 @@ const TableHeader = ({name, setFilters, filters}) => {
                         {filters.map((filter) => {
                             return filter.type === "selection" && (<div className={"flex flex-col gap-2"}>
                                 <h3>{filter.title}</h3>
-                                <Select className="max-w-xs" variant={"bordered"}
-                                        onSelectionChange={(e) => filterSelectChange(e, filter.name)}>
-                                    {selectionData?.[filter?.name]?.map((item) => (
+                                <Select
+                                    className="max-w-xs"
+                                    variant={"bordered"}
+                                    selectedKeys={values[filter.name]}
+                                    onSelectionChange={(e) => filterSelectChange(e, filter.name)}
+                                >
+                                    {selectionData?.[filter?.name]?.map((item, index) => (
                                         <SelectItem key={item?.key}>{item?.value}</SelectItem>))}
                                 </Select>
                             </div>)
