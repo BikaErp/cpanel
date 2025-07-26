@@ -73,21 +73,16 @@ const TableHeader = ({name, setFilters, filters}) => {
     }
 
     function setSearch(value) {
-        setFilters(prev =>
-            Array.isArray(prev)
-                ? prev.map(item =>
-                    item.name === "Search"
-                        ? { ...item, value: value }
-                        : item
-                )
-                : []
-        );
+        setFilters(prev => Array.isArray(prev) ? prev.map(item => item.name === "Search" ? {
+            ...item,
+            value: value
+        } : item) : []);
     }
 
     const processChange = debounce(setSearch, 800);
 
     const handleSearch = (e) => {
-        const { value } = e.target;
+        const {value} = e.target;
         processChange(value);
     };
 
