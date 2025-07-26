@@ -7,10 +7,11 @@ import {useTranslation} from "react-i18next";
 import StateChange from "@components/Globals/Components/DataTable/StateChange.jsx";
 import {ToggleApi} from "@components/Globals/Functions/ToggleApi.js";
 import {ColumnsDef} from "@components/Modules/Languages/Components/Configs/ColumnsDef.jsx";
+import Add from "@components/Modules/Languages/Add";
 
 const Module = "languages";
 
-export default function LanguagesModule() {
+const Languages = () => {
     const {t} = useTranslation()
     const [refresh, setRefresh] = useState(true)
     const [dropDownShow, setDropDownShow] = useState(false)
@@ -21,10 +22,6 @@ export default function LanguagesModule() {
 
     const handleOpenDropDown = () => {
         setDropDownShow(true)
-    }
-
-    const handleCloseDropDown = () => {
-        setDropDownShow(false)
     }
 
     const columns = ColumnsDef(Module, update)
@@ -41,3 +38,7 @@ export default function LanguagesModule() {
         </>
     );
 }
+
+Languages.Add = Add
+
+export default Languages;

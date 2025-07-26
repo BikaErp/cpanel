@@ -17,12 +17,14 @@ import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {GET} from "@components/Services/Axios/Methods.js";
 import {Alert} from "@components/Globals/Functions/Alert.js";
+import {useNavigate} from "react-router";
 
 const TableHeader = ({name, setFilters, filters}) => {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const {t} = useTranslation();
     const [selectionData, setSelectionData] = useState();
     const [values, setValues] = useState({});
+    const navigate = useNavigate();
 
     const fetchSelectionOptions = async () => {
         const selectionFilters = filters.filter(f => f.type === "selection");
@@ -44,6 +46,10 @@ const TableHeader = ({name, setFilters, filters}) => {
     useEffect(() => {
         fetchSelectionOptions();
     }, []);
+
+    const handleAdd = () => {
+        navigate("add")
+    }
 
     const filterToggleChange = (e) => {
         const {name, checked} = e.target;
@@ -74,8 +80,7 @@ const TableHeader = ({name, setFilters, filters}) => {
 
     function setSearch(value) {
         setFilters(prev => Array.isArray(prev) ? prev.map(item => item.name === "Search" ? {
-            ...item,
-            value: value
+            ...item, value: value
         } : item) : []);
     }
 
@@ -105,7 +110,7 @@ const TableHeader = ({name, setFilters, filters}) => {
                     <span>فیلتر پیشرفته</span>
                 </Button>
             </div>
-            <Button color="primary" className="gap-1 font-bold">
+            <Button color="primary" className="gap-1 font-bold" onPress={handleAdd}>
                 <Add size={28}/>
                 {!name ? <span>افزودن</span> : <span>{name} جدید</span>}
             </Button>

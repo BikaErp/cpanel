@@ -15,8 +15,9 @@ const RoutesPath = () => {
                     <Route element={<ApplicationProvider/>}>
                         <Route path="/" element={<>heellloo</>}/>
 
-                        <Route path="/Languages" element={<Languages/>}>
-
+                        <Route path="/Languages">
+                            <Route index element={<Languages/>}/>
+                            <Route path="add" element={<Languages.Add/>}/>
                         </Route>
                     </Route>
 
