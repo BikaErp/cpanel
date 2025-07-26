@@ -45,12 +45,6 @@ const TableHeader = ({name, setFilters, filters}) => {
         fetchSelectionOptions();
     }, []);
 
-    const convertToSelection = (data) => {
-        return data.map(item => ({
-            key: item.key, label: item.value,
-        }))
-    }
-
     const filterToggleChange = (e) => {
         const {name, checked} = e.target;
 
@@ -68,20 +62,48 @@ const TableHeader = ({name, setFilters, filters}) => {
         } : item) : []);
     }
 
+    function debounce(func, timeout = 300) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                func.apply(this, args);
+            }, timeout);
+        };
+    }
+
+    function setSearch(value) {
+        setFilters(prev =>
+            Array.isArray(prev)
+                ? prev.map(item =>
+                    item.name === "Search"
+                        ? { ...item, value: value }
+                        : item
+                )
+                : []
+        );
+    }
+
+    const processChange = debounce(setSearch, 800);
+
+    const handleSearch = (e) => {
+        const { value } = e.target;
+        processChange(value);
+    };
+
+
     return (<>
         <div className="flex justify-between items-center w-full">
             <div className="gap-4 flex items-center justify-center">
                 <Input
                     isClearable
-                    isRequired
                     name="username"
                     placeholder={`جستجوی ${name}`}
                     type="text"
                     classNames={{base: "w-[330px]", inputWrapper: "border-1"}}
                     variant="bordered"
                     startContent={<SearchNormal1 className="track-2 text-gray-500" size={25}/>}
-                    onChange={() => {
-                    }}
+                    onChange={handleSearch}
                 />
                 <Button variant="bordered" onPress={onOpen} className="gap-2 font-bold text-gray-800">
                     <Filter size={22}/>

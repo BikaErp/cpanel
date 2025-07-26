@@ -12,6 +12,11 @@ const DataTable = ({name, module, rowData, columnsDef, refresh}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [filters, setFilters] = useState([
         {
+            name: "Search",
+            type: "search",
+            value: null,
+        },
+        {
             name: "pageNumber",
             type: "pagination",
             value: 1,
