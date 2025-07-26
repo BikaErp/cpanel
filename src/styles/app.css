@@ -6,7 +6,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme{
-    --color-primary: #1c3faa;
+    --color-primary: #0A1944;
 }
 
 @layer base {
@@ -51,7 +51,7 @@
     }
 
     .gradient-primary {
-        background-image: linear-gradient(to right bottom, #1c3faa, #5382ff);
+        background-image: linear-gradient(to right bottom, #0A1944, #2950b6);
     }
 
     #nprogress .bar {

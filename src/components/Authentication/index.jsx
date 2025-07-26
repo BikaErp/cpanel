@@ -41,7 +41,7 @@ const Authentication = () => {
             className="max-w-[1100px] gap-[50px] w-full rounded-[30px] p-4 bg-white border border-gray-300 h-screen max-h-[550px] flex justify-center">
             <div className="basis-5/12 flex justify-center">
                 <div className="w-[350px] flex flex-col justify-center h-full">
-                    <img src="/images/ArmDark.svg" alt="Harmony" className="w-[220px] mx-auto mb-10"/>
+                    <img src="/images/BikaFull.png" alt="Harmony" className="w-[220px] mx-auto mb-10"/>
                     <Form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <Input
                             label={t("userName")}
@@ -81,9 +81,9 @@ const Authentication = () => {
 
             <div
                 className="basis-7/12 rounded-[20px] gradient-primary flex flex-col justify-center items-center gap-[10px]">
-                <img src="https://cpanel.harmonysystem.ir/Assets/Image/Login/illustration.svg" alt=""/>
-                <h1 className="font-[rokh] font-bold text-white text-[30px]">Harmony</h1>
+                <img src="/images/Bika.svg" className={"w-[150px]"} alt=""/>
                 <h1 className="font-[rokh] font-bold text-white text-[32px]">بهتر از انچه فکر میکنید!</h1>
+                <h3 className="font-[rokh] font-bold text-white text-[20px]">همه چیز را داشته باشید و هیچ چیز نیاز نداشته باشید!</h3>
             </div>
         </div>
     </main>);
