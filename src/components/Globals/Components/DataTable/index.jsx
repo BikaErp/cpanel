@@ -44,7 +44,7 @@ const DataTable = ({name, module, rowData, columnsDef, refresh}) => {
             type: "selection",
             api: "/Countries/Selection",
             value: null
-        }
+        },
     ]);
     const [selectedRow, setSelectedRow] = useState(null);
 

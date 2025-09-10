@@ -1,9 +1,15 @@
 const locations = {
   en: {
-    LANGUAGES: "Languages"
+    LANGUAGES: "Languages",
+    ADD: "Languages",
+    DELETE: "Languages",
+    EDIT: "Languages"
   },
   fa: {
-    LANGUAGES: "زبان ها"
+    LANGUAGES: "زبان ها",
+    ADD: "افزودن",
+    DELETE: "حذف",
+    EDIT: "ویرایش"
   }
 }
 
