@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="85c28b52-6b71-4623-b72f-758060b5a107" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Globals/Components/DataTable/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Globals/Components/DataTable/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MainLayout/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MainLayout/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Services/Translations/Resources.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Services/Translations/Resources.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+        <option value="JSX File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="30B2Re2BZbsqEa4nHdCqGqpTAOY" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/tikrack/Projects/Harmony/app",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "bun",
+    "settings.editor.selected.configurable": "editing.templates",
+    "ts.external.directory.path": "/home/tikrack/Projects/Harmony_Cpanel/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/Globals/Functions" />
+      <recent name="$PROJECT_DIR$/src/components/MainLayout" />
+      <recent name="$PROJECT_DIR$/src/components/Routes" />
+      <recent name="$PROJECT_DIR$/src/components/Services/Axios" />
+      <recent name="$PROJECT_DIR$/public/images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/Globals/Components/DataTable" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-WS-251.26094.131" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="85c28b52-6b71-4623-b72f-758060b5a107" name="Changes" comment="" />
+      <created>1753086638926</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1753086638926</updated>
+      <workItem from="1753086640090" duration="1731000" />
+      <workItem from="1753088561045" duration="2930000" />
+      <workItem from="1753093020673" duration="1535000" />
+      <workItem from="1753094940322" duration="2143000" />
+      <workItem from="1753097141818" duration="264000" />
+      <workItem from="1753097954004" duration="5352000" />
+      <workItem from="1753105050039" duration="28000" />
+      <workItem from="1753105095148" duration="418000" />
+      <workItem from="1753105581899" duration="864000" />
+      <workItem from="1753106524735" duration="98000" />
+      <workItem from="1753106639021" duration="1817000" />
+      <workItem from="1753108558468" duration="2595000" />
+      <workItem from="1753175308028" duration="133000" />
+      <workItem from="1753175528468" duration="541000" />
+      <workItem from="1753176167170" duration="262000" />
+      <workItem from="1753187682979" duration="2110000" />
+      <workItem from="1753189997903" duration="5034000" />
+      <workItem from="1753255094161" duration="456000" />
+      <workItem from="1753257124131" duration="2575000" />
+      <workItem from="1753260638334" duration="2605000" />
+      <workItem from="1753266645321" duration="7579000" />
+      <workItem from="1753280283910" duration="5200000" />
+      <workItem from="1753290575245" duration="6344000" />
+      <workItem from="1753297625030" duration="2780000" />
+      <workItem from="1753300428659" duration="3072000" />
+      <workItem from="1753303562516" duration="34000" />
+      <workItem from="1753303615806" duration="118000" />
+      <workItem from="1753334583537" duration="1209000" />
+      <workItem from="1753339493605" duration="776000" />
+      <workItem from="1753341712605" duration="254000" />
+      <workItem from="1753341996118" duration="505000" />
+      <workItem from="1753342523094" duration="371000" />
+      <workItem from="1753342909168" duration="11187000" />
+      <workItem from="1753355576196" duration="3162000" />
+      <workItem from="1753358758327" duration="8795000" />
+      <workItem from="1753370559282" duration="1390000" />
+      <workItem from="1753388540197" duration="3591000" />
+      <workItem from="1753430643054" duration="391000" />
+      <workItem from="1753445334402" duration="1528000" />
+      <workItem from="1753448346329" duration="6330000" />
+      <workItem from="1753475411126" duration="5609000" />
+      <workItem from="1753513467051" duration="1285000" />
+      <workItem from="1753516772178" duration="12000" />
+      <workItem from="1753519484652" duration="5267000" />
+      <workItem from="1753726633848" duration="4000" />
+      <workItem from="1753772796101" duration="916000" />
+      <workItem from="1754502556392" duration="96000" />
+      <workItem from="1754568365572" duration="2330000" />
+      <workItem from="1754576990458" duration="59000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
